@@ -3,6 +3,8 @@ package com.example.backend.controller.financial;
 import com.example.backend.service.financial_item.DeleteFinancialItem;
 import com.example.backend.service.financial_item.FindAllFinancialItemsPaged;
 import com.example.backend.service.financial_item.SaveFinancialItem;
+import com.example.backend.service.financial_item.UpdateFinancialItem;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,11 +23,13 @@ public class FinancialItemController {
     private final FindAllFinancialItemsPaged findAllFinancialItemsPaged;
     private final SaveFinancialItem saveFinancialItem;
     private final DeleteFinancialItem deleteFinancialItem;
+    private final UpdateFinancialItem updateFinancialItem;
 
-    public FinancialItemController(FindAllFinancialItemsPaged findAllFinancialItemsPaged, SaveFinancialItem saveFinancialItem, DeleteFinancialItem deleteFinancialItem) {
+    public FinancialItemController(FindAllFinancialItemsPaged findAllFinancialItemsPaged, SaveFinancialItem saveFinancialItem, DeleteFinancialItem deleteFinancialItem, UpdateFinancialItem updateFinancialItem) {
         this.findAllFinancialItemsPaged = findAllFinancialItemsPaged;
         this.saveFinancialItem = saveFinancialItem;
         this.deleteFinancialItem = deleteFinancialItem;
+        this.updateFinancialItem = updateFinancialItem;
     }
 
     @GetMapping
@@ -46,6 +50,11 @@ public class FinancialItemController {
     public ResponseEntity<FinancialItemDTO> delete(Principal principal, @PathVariable Long id) throws Exception {
         FinancialItemDTO item = this.deleteFinancialItem.execute(principal, id);
         return ResponseEntity.ok(item);
+    }
+
+    @PutMapping()
+    public ResponseEntity<FinancialItemDTO> update(Principal principal, @RequestBody FinancialItemDTO financialItemDTO) throws Exception {
+        return ResponseEntity.ok(this.updateFinancialItem.execute(principal, financialItemDTO));
     }
 
 }
