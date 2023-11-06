@@ -22,7 +22,8 @@ services:
       dockerfile: backend/Dockerfile
       context: .
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - network
 
