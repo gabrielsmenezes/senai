@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    active: docker
+  security:
+    user:
+      password: alura
